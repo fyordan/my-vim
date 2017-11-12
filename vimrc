@@ -111,6 +111,9 @@ Plugin 'jlanzarotta/bufexplorer'
 " ctrlP for fuzzy finder.
 Plugin 'kien/ctrlp.vim'
 
+" For moving windows/panes with <leader>ww
+Plugin 'wesQ3/vim-windowswap'
+
 " for markdown preview with <leader>p
 Plugin 'JamshedVesuna/vim-markdown-preview'
 let vim_markdown_preview_hotkey='<leader>p'
