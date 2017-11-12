@@ -16,8 +16,23 @@ Plugin 'VundleVim/Vundle.vim'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
+
 " plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+
+" for marks
+Plugin 'kshenoy/vim-signature'
+
+" Sign Column adjustments for signature and git-gutter to play well together.
+let g:SignatureMarkTextHLDynamic   = 1
+let g:SignatureMarkerTextHLDynamic = 1
+" Make sign column always appear so it looks more consistent.
+if exists('&signcolumn')  " Vim 7.4.2201
+  set signcolumn=yes
+else
+  let g:gitgutter_sign_column_always = 1
+endif
 
 " Google code-fmt plugin "
 
@@ -58,9 +73,6 @@ Plugin 'vim-airline/vim-airline-themes'
 " Remove mode indicator since it shows up in new statusline anyway
 set noshowmode
 
-" for marks
-Plugin 'kshenoy/vim-signature'
-
 " for directory navigation
 Plugin 'scrooloose/nerdtree'
 
@@ -76,6 +88,7 @@ Plugin 'sheerun/vim-polyglot'
 " for easy ctags management (needs to install exuberant-ctags first
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-easytags'
+set tags=../tags,tags;$HOME "tells Vim to look for a tags file up to $HOME dir.
 
 " for visualizing tags
 Plugin 'majutsushi/tagbar'
@@ -95,13 +108,16 @@ Plugin 'utl.vim'
 " for bufexplorer
 Plugin 'jlanzarotta/bufexplorer'
 
+" ctrlP for fuzzy finder.
+Plugin 'kien/ctrlp.vim'
+
 " for markdown preview with <leader>p
 Plugin 'JamshedVesuna/vim-markdown-preview'
 let vim_markdown_preview_hotkey='<leader>p'
 let vim_markdown_preview_browser='Firefox'
 
 " for viewing past yanked/deleted content
-Plugin 'YankRing.vim'
+" Plugin 'YankRing.vim'
 
 " for narrow region with :NR
 Plugin 'chrisbra/NrrwRgn'
@@ -114,7 +130,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 Plugin 'honza/vim-snippets'
 
 " For python consistency indentation
-Plugin 'IndentConsistencyCop'
+" Plugin 'IndentConsistencyCop'
 
 "TODO: add plugins for:
 "tmux integration (panes and registers)
@@ -145,12 +161,18 @@ filetype plugin indent on    " required
 
 " show line numbers
 set nu
+" highlight numbers
+highlight LineNr ctermbg=235
 " enable syntax processing
 syntax enable
-" set line where cursor is. Useful if you lose the cursor.
-set cursorline
+" set line where cursor is. Useful if you lose the cursor with <leader>f.
+hi CursorLine cterm=None ctermbg=233
+hi CursorColumn cterm=None ctermbg=233
+set cursorline cursorcolumn
+nnoremap <Leader>f :set cursorline! cursorcolumn!<CR>
 " set a color column at 80 characters cause long lines are ugly in code.
-set colorcolumn=80
+hi ColorColumn cterm=None ctermbg=235
+execute "set colorcolumn=".join(range(80,334),',')
 " auto complete graphical menu for commands.
 set wildmenu
 " doesn't redraw screen in middle of macros (leads to faster macros).
@@ -197,3 +219,5 @@ nnoremap <leader>- <C-w>-
 nnoremap <leader>< <C-w>>
 nnoremap <leader>> <C-w><
 nnoremap <leader>= <C-w>=
+" Close pane with <C-x>
+nnoremap <C-x> <C-w><C-q>
